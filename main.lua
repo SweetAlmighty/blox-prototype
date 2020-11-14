@@ -5,8 +5,8 @@ local columns = 5
 local new_shape = { }
 local row_index = { }
 local col_index = { }
-local block_width = 25
-local block_height = 25
+local block_width = 53
+local block_height = 53
 local selected_shape = nil
 local colors = {
     { r = 1, g = 0, b = 0 },
@@ -24,7 +24,7 @@ local colors = {
 }
 
 function shuffle(list)
-    local shuffled = {}
+    local shuffled = { }
     for _, v in ipairs(list) do
         local pos = math.random(1, #shuffled+1)
         table.insert(shuffled, pos, v)
@@ -79,9 +79,13 @@ function draw_grid()
 end
 
 function create_shapes()
+    shapes = { }
+
+    row_index = { }
     for i=1, rows, 1 do row_index[#row_index + 1] = i end
     row_index = shuffle(row_index)
 
+    col_index = { }
     for i=1, columns, 1 do col_index[#col_index + 1] = i end
     col_index = shuffle(col_index)
 
@@ -108,6 +112,12 @@ function create_shapes()
                     shapes[#shapes + 1] = new_shape
                 end
             end
+        end
+    end
+
+    for i=1, #grid, 1 do
+        for j=1, #grid[i], 1 do
+            grid[i][j].checked = false
         end
     end
 end
@@ -148,7 +158,14 @@ function move_selected_shape(dx, dy)
     end
 end
 
+function draw_reset_button()
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.rectangle('line', 50, 1, 100, 40)
+    love.graphics.print('Reset', 51, 2)
+end
+
 function love.draw()
+    draw_reset_button()
     draw_grid()
     draw_shapes()
 end
@@ -165,17 +182,22 @@ function love.mousemoved(_, _, dx, dy)--, istouch)
     move_selected_shape(dx, dy)
 end
 
-function love.mousepressed(x, y)--, button, istouch, presses)
-    for i=1, #shapes, 1 do
-        for j=1, #shapes[i], 1 do
-            local shape = shapes[i][j]
-            if x >= shape.x and x < shape.x + block_width then
-                if y >= shape.y and y < shape.y + block_height then
-                    selected_shape = shapes[i]
+function love.mousepressed(x, y, button, istouch, presses)
+    if x > 1 and x < 100 and y > 1 and y < 40 then
+        create_shapes()
+        place_shapes()
+    else
+        for i=1, #shapes, 1 do
+            for j=1, #shapes[i], 1 do
+                local shape = shapes[i][j]
+                if x >= shape.x and x < shape.x + block_width then
+                    if y >= shape.y and y < shape.y + block_height then
+                        selected_shape = shapes[i]
 
-                    -- move shape away from finger
-                    move_selected_shape(0, -100)
-                    return
+                        -- move shape away from finger
+                        move_selected_shape(0, -100)
+                        return
+                    end
                 end
             end
         end
