@@ -1,29 +1,5 @@
-# README #
+# BLOX #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Prototype for a game concept I was kicking around, written in LOVE2D.
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Based on concepts explored in [Cats Neatly Organized](https://store.steampowered.com/app/1369340/Cats_Organized_Neatly/)
